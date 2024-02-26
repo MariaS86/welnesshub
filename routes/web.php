@@ -19,3 +19,8 @@ Route::get('/', function () {
 Route::get('/hello', function () {
     return view('hello', ['title'=>'Hello world!']);
 });
+use App\Http\Controllers\CategoryAController;
+Route::get('/categorya', [CategoryAController::class, 'index']);
+Route::get('/categorya/{id}', [CategoryAController::class, 'show']);
+use App\Http\Controllers\ConsumesController;
+Route::get('/users/{id}', [ConsumesController::class, 'show']);
