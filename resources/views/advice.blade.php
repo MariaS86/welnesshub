@@ -1,3 +1,6 @@
+<?php
+use Illuminate\Pagination\Paginator;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +16,7 @@
             <td>Текст</td>
             <td>Категория</td>
         </thead>
-        @foreach ($advice as $advice)
+        @foreach ($advices as $advice)
         <tr>
             <td>{{$advice->id}}</td>
             <td>{{$advice->name}}</td>
@@ -25,7 +28,8 @@
             </td>
         </tr>
     @endforeach
-    </table>
+</table>
+{{ $advices->links() }}
     {{-- @endif --}}
 </body>
 </html>

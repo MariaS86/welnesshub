@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Advices;
 use App\Models\CategoryA;
+
 class AdviceController extends Controller
 {
     /**
@@ -12,12 +13,13 @@ class AdviceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('advice',[
-            'advice' => Advices::all()
-        ]);
-    }
+    public function index(Request $request)
+{
+    $perpage = $request->perpage ?? 2;
+    return view('advice', [
+        'advices' => Advices::paginate($perpage)->withQueryString()
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
