@@ -22,14 +22,5 @@ Route::get('/hello', function () {
 use App\Http\Controllers\CategoryAController;
 Route::get('/categorya', [CategoryAController::class, 'index']);
 Route::get('/categorya/{id}', [CategoryAController::class, 'show']);
-
-use App\Http\Controllers\AdviceController;
-Route::get('/advice', [AdviceController::class, 'index']);
-Route::get('/advice/create', [AdviceController::class, 'create']);
-Route::post('/advice', [AdviceController::class, 'store']);
-Route::get('/advice/edit/{id}', [AdviceController::class, 'edit']);
-Route::post('/advice/update/{id}', [AdviceController::class, 'update']);
-Route::get('/advice/destroy/{id}', [AdviceController::class, 'destroy']);
-
 use App\Http\Controllers\ConsumesController;
 Route::get('/users/{id}', [ConsumesController::class, 'show']);

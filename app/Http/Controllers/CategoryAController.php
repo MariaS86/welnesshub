@@ -27,6 +27,7 @@ class CategoryAController extends Controller
     public function create()
     {
         //
+        
     }
 
     /**
