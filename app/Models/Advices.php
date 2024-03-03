@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Advices extends Model
 {
     //
+ 
+    protected $fillable = ['name', 'text', 'category_id'];
+
     use HasFactory;
     protected $table = 'advices';
 
@@ -17,4 +20,5 @@ class Advices extends Model
 {
     return $this->belongsTo(CategoryA::class, 'category_id');
 }
+
 }
