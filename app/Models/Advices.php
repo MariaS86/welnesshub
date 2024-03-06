@@ -20,5 +20,8 @@ class Advices extends Model
 {
     return $this->belongsTo(CategoryA::class, 'category_id');
 }
-
+// public function advices(): HasMany
+// {
+//     return $this->hasMany(Advices::class, 'category_id');
+// }
 }

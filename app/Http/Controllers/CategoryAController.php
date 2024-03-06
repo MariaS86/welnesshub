@@ -53,9 +53,17 @@ class CategoryAController extends Controller
         // return view('category', [
         //     'category'=> CategoryA::all()->where('id', $id)->first()
         // ]);
-        return view('category', [
-            'category'=> Advices::all()
-        ]);
+       
+            return view( 'category', [
+            'category' => CategoryA::all()->where( 'id', $id)->first()->Advices()->get()
+            ]);
+            // return  Advices::all()->where( 'id', $id)->first()->CategoryA()->get()
+            //     ;
+                // return  CategoryA::all()->where( 'id', $id)->first()->Advices()->get()
+                // ;
+            // return view( 'category', [
+            //     'category' => CategoryA::all()->where('id', $id)->first()->get()
+            //     ]);
         // return view('categories_a', [
         //     'categories_a' => CategoryA::all()
         // ]);

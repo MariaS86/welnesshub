@@ -12,6 +12,7 @@ class CategoryA extends Model
     protected $table = 'categories_a';
     public function advices(): HasMany
     {
-        return $this->hasMany(Advices::class);
+        // return $this->hasMany(Advices::class);
+        return $this->hasMany(Advices::class, 'category_id', 'id');
     }
 }
