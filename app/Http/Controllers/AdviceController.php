@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Advices;
 use App\Models\CategoryA;
+use Illuminate\Support\Facades\Gate;
 
 class AdviceController extends Controller
 {
@@ -115,6 +116,12 @@ class AdviceController extends Controller
     public function destroy($id)
     {
         //
+        // Advices::destroy($id);
+        // return redirect('/advice');
+        if (! Gate::allows('destroy-advices', Advices::all()->where('id', $id)->first())) {
+            return redirect('/error')->with('message',
+            'У вас нет разрешения удалять советы с 2 категории' );
+        }
         Advices::destroy($id);
         return redirect('/advice');
     }

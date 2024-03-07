@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Advices;
+use App\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +28,14 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Paginator::defaultView('pagination::default');
+        Gate::define('destroy-advices', function (User $user, Advices $advices){
+            return $user->role_id OR $advices->category_id < 2;
+        });
+
+   
+
+        // Gate::define('destroy-advices', function (Users $users, Advices $advices){
+        //     return $users->role_id OR $advices->category_id<2;
+        // });
     }
 }

@@ -33,3 +33,12 @@ Route::get('/advice/destroy/{id}', [AdviceController::class, 'destroy']);
 
 use App\Http\Controllers\ConsumesController;
 Route::get('/users/{id}', [ConsumesController::class, 'show']);
+
+use App\Http\Controllers\LoginController;
+Route::get('/login', [LoginController::class, 'login']);
+Route::get('/logout', [LoginController::class, 'logout']);
+Route::post('/auth', [LoginController::class, 'authenticate']);
+
+Route::get('/error', function () {
+    return view('error', ['message' => session('message')]);
+});
