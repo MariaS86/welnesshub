@@ -64,7 +64,8 @@ class AdviceController extends Controller
         ]);
         $advice=new Advices($validated);
         $advice->save();
-        return redirect('/advice');
+        return redirect('/advice')->withErrors(['success'=> 'Совет успешно добавлен',]);
+  
 }
 
     // public function store(Request $request)
@@ -149,7 +150,7 @@ class AdviceController extends Controller
             return redirect('/error')->with('message', 'У вас нет разрешения редактировать советы');
         }
     
-        // Ваш существующий код обновления совета
+       
                 $validated = $request->validate([
             'name'=>'required',
             'text'=>'required',
@@ -160,7 +161,8 @@ class AdviceController extends Controller
         $advice->text = $validated['text'];
         $advice->category_id = $validated['category_id'];
         $advice->save();
-        return redirect('/advice');
+        return redirect('/advice')->withErrors(['success'=> 'Совет успешно изменен',]);
+  
     }
     /**
      * Remove the specified resource from storage.
@@ -170,14 +172,12 @@ class AdviceController extends Controller
      */
     public function destroy($id)
     {
-        //
-        // Advices::destroy($id);
-        // return redirect('/advice');
-        if (! Gate::allows('destroy-advices', Advices::all()->where('id', $id)->first())) {
-            return redirect('/error')->with('message',
-            'У вас нет разрешения удалять советы с 2 категории' );
+        if (!Gate::allows('destroy-advices', Advices::find($id))) {
+            return redirect('/error')->withErrors(['message'=> 'У вас нет разрешения',]);
         }
+    
         Advices::destroy($id);
-        return redirect('/advice');
+    
+        return redirect('/advice')->withErrors(['success'=> 'Совет успешно удален',]);
     }
 }
