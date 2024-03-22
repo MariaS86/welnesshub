@@ -1,35 +1,34 @@
-<?php
-use Illuminate\Pagination\Paginator;
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>609-01</title>
-</head>
-<body>
-    <h2>Список советов</h2>
-    <table border="1">
-        <thead>
-            <td>id</td>
-            <td>Название</td>
-            <td>Текст</td>
-            <td>Категория</td>
-        </thead>
-        @foreach ($advices as $advice)
-        <tr>
-            <td>{{$advice->id}}</td>
-            <td>{{$advice->name}}</td>
-            <td>{{$advice->text}}</td>
-            <td>{{$advice->categorya->name }}</td>
-            <td>
-                <a href="{{url('advice/destroy/'.$advice->id)}}">Удалить</a>
-                <a href="{{url('advice/edit/'.$advice->id)}}">Редактировать</a>          
-            </td>
-        </tr>
-    @endforeach
-</table>
-{{ $advices->links() }}
-    {{-- @endif --}}
-</body>
-</html>
+@extends('layout')
+@section('content')
+    <h2 class="mt-5 text-center">Список советов</h2>
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>id</th>
+                    <th>Название</th>
+                    <th>Текст</th>
+                    <th>Категория</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($advices as $advice)
+                <tr>
+                    <td>{{$advice->id}}</td>
+                    <td>{{$advice->name}}</td>
+                    <td>{{$advice->text}}</td>
+                    <td>{{$advice->categorya->name }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Действия">
+                            <a href="{{url('advice/destroy/'.$advice->id)}}" class="btn btn-danger">Удалить</a>
+                            <a href="{{url('advice/edit/'.$advice->id)}}" class="btn btn-primary">Редактировать</a>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    {{ $advices->links() }}
+@endsection

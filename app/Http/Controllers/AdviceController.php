@@ -27,13 +27,23 @@ class AdviceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    // public function create()
+    // {
+    //     return view('advice_create', [
+    //         'categories_a'=> CategoryA::all()
+    // ]);
+    // }
     public function create()
     {
+        if (Gate::denies('add-advices')) {
+            return redirect('/error')->with('message', 'У вас нет разрешения добавлять советы');
+        }
+    
         return view('advice_create', [
-            'categories_a'=> CategoryA::all()
-    ]);
+            'categories_a' => CategoryA::all()
+        ]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -41,9 +51,13 @@ class AdviceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
-        $validated = $request->validate([
+{
+    if (Gate::denies('add-advices')) {
+        return redirect('/error')->with('message', 'У вас нет разрешения добавлять советы');
+    }
+
+    // Ваш существующий код сохранения совета
+            $validated = $request->validate([
             'name' => 'required',
             'text'=> 'required',
             'category_id' =>'integer'
@@ -51,7 +65,20 @@ class AdviceController extends Controller
         $advice=new Advices($validated);
         $advice->save();
         return redirect('/advice');
-    }
+}
+
+    // public function store(Request $request)
+    // {
+    //     //
+    //     $validated = $request->validate([
+    //         'name' => 'required',
+    //         'text'=> 'required',
+    //         'category_id' =>'integer'
+    //     ]);
+    //     $advice=new Advices($validated);
+    //     $advice->save();
+    //     return redirect('/advice');
+    // }
 
     /**
      * Display the specified resource.
@@ -70,21 +97,31 @@ class AdviceController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\Response
      */
+    // public function edit($id)
+    // {
+    //     //
+ 
+    // // $categories_a = Category::all(); // Предполагая, что вы хотите получить все категории
+    // // $advice = Advice::find($id); // Получение совета для редактирования
+
+    // // return view('advice_edit', ['categories_a' => $categories_a, 'advice' => $advice]);
+
+    //     return view('advice_edit', [
+    //         'advice'=>Advices::all()->where('id',$id)->first(),
+    //         'categories_a'=>CategoryA::all()
+    //     ]);
+    // }
     public function edit($id)
     {
-        //
- 
-    // $categories_a = Category::all(); // Предполагая, что вы хотите получить все категории
-    // $advice = Advice::find($id); // Получение совета для редактирования
-
-    // return view('advice_edit', ['categories_a' => $categories_a, 'advice' => $advice]);
-
+        if (Gate::denies('edit-advices')) {
+            return redirect('/error')->with('message', 'У вас нет разрешения редактировать советы');
+        }
+    
         return view('advice_edit', [
-            'advice'=>Advices::all()->where('id',$id)->first(),
-            'categories_a'=>CategoryA::all()
+            'advice' => Advices::find($id),
+            'categories_a' => CategoryA::all()
         ]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -92,9 +129,28 @@ class AdviceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function update(Request $request, $id)
+    // {
+    //     $validated = $request->validate([
+    //         'name'=>'required',
+    //         'text'=>'required',
+    //         'category_id'=>'integer'
+    //     ]);
+    //     $advice=Advices::all()->where('id',$id)->first();
+    //     $advice->name = $validated['name'];
+    //     $advice->text = $validated['text'];
+    //     $advice->category_id = $validated['category_id'];
+    //     $advice->save();
+    //     return redirect('/advice');
+    // }
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        if (Gate::denies('edit-advices')) {
+            return redirect('/error')->with('message', 'У вас нет разрешения редактировать советы');
+        }
+    
+        // Ваш существующий код обновления совета
+                $validated = $request->validate([
             'name'=>'required',
             'text'=>'required',
             'category_id'=>'integer'
@@ -106,7 +162,6 @@ class AdviceController extends Controller
         $advice->save();
         return redirect('/advice');
     }
-
     /**
      * Remove the specified resource from storage.
      *

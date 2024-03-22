@@ -1,46 +1,49 @@
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>609-01</title>
-        <style> .is-invalid {color: red;} </style>
-    </head>
-    <body>
-        <h2>Добавление совета</h2>
-            <form method="post" action="{{ url('advice') }}">
+    @extends('layout')
+    @section('content')
+    <div class="container mt-4">
+        <h2 class="mt-4 text-center">Добавление совета</h2>
+        <form method="post" action="{{ url('advice') }}">
             @csrf
-            <label>Название совета:</label>
-            <input type="text" name="name" value="{{old('name')}}" />
-            @error('name')
-            <div class="is-invalid">{{ $message }}</div>
-            @enderror
-            <br>
-            <br>
-            <label>Текст совета:</label>
-            <input type="text" name="text" value="{{old('text')}}"/>
-            @error('text')
-            <div class="is-invalid">{{ $message }}</div>
-            @enderror
-            <br>
-            <br>
-            <label>Категория совета:</label>
-            
-            <select name="category_id" value="{{ old('category_id') }}">
-                <option style="...">
+            <div class="form-group">
+                <label for="name">Название совета:</label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" aria-describedby="nameHelp" value="{{old('name')}}" />
+                <small id="nameHelp" class="form-text text-muted">Введите название совета (макс. 100 символов)</small>
+                @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="text">Текст совета:</label>
+                <input type="text" class="form-control @error('text') is-invalid @enderror" id="text" name="text" aria-describedby="textHelp" value="{{old('text')}}" />
+                <small id="textHelp" class="form-text text-muted">Введите текст совета (макс. 100 символов)</small>
+                @error('text')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="category">Категория совета:</label>
+                <select class="form-control" id="category" name="category_id" aria-describedby="categoryHelp">
+                    <option value="">Выберите категорию</option>
                     @foreach ($categories_a as $categorya)
-                    <option value="{{$categorya->id}}"
-                        @if(old('category_id') == $categorya->id) selected 
-                        @endif>{{$categorya->name}}</option>
+                        <option value="{{$categorya->id}}" @if(old('category_id') == $categorya->id) selected @endif>{{$categorya->name}}</option>
                     @endforeach
                 </select>
+                <small id="categoryHelp" class="form-text text-muted">Выберите категорию совета</small>
                 @error('category_id')
-                <div class="is-invalid">{{ $message }}</div>
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
                 @enderror
-                <br>
-                {{-- <input type="submit"> --}}
-                <input type="submit" value="Submit">
-        </form>    
-    </body>
-</html>
-                                
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </div>
+            </form>
+    </div>
+    @endsection
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

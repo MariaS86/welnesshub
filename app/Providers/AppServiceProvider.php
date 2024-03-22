@@ -29,9 +29,23 @@ class AppServiceProvider extends ServiceProvider
         //
         Paginator::defaultView('pagination::default');
         Gate::define('destroy-advices', function (User $user, Advices $advices){
-            return $user->role_id OR $advices->category_id < 2;
+            // return $user->role_id OR $advices->category_id < 2;
+            return $user->role_id;
         });
-
+        // Gate::define('edit-advices', function (User $user, Advices $advices){
+        //     return $user->role_id; // Assuming role_id 1 represents the administrator role
+        // });
+        
+        // Gate::define('add-advices', function (User $user, Advices $advices){
+        //     return $user->role_id; // Only administrators can add advices
+        // });
+        Gate::define('edit-advices', function (User $user){
+            return $user->role_id; // Предполагая, что роль администратора имеет ID 1
+        });
+        
+        Gate::define('add-advices', function (User $user){
+            return $user->role_id; // Только администраторы могут добавлять советы
+        });
    
 
         // Gate::define('destroy-advices', function (Users $users, Advices $advices){
